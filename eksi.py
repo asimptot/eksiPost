@@ -1,6 +1,6 @@
 from time import sleep
 import sys
-sys.path.append(r'C:\\Projects\\Sosyal\\Eksi')
+sys.path.append(r'C:\\Projects\\Eksi')
 from init import *
 from unidecode import unidecode
 
