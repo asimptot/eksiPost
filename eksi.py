@@ -97,8 +97,12 @@ class Eksi:
         paste.send_keys(copy)
         sleep(4)
 
-        send = self.browser.find_element(By.XPATH, "//*[contains(text(), 'yolla')]")
-        send.click()
+        N = 2
+        actions = ActionChains(self.browser)
+        for _ in range(N):
+            actions.send_keys(Keys.TAB).perform()
+        sleep(2)
+        actions.send_keys(Keys.RETURN).perform()
         sleep(4)
 
         if("efendimiz" in self.browser.page_source):
