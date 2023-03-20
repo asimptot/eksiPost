@@ -1,4 +1,3 @@
-from time import sleep
 import sys
 sys.path.append(r'C:\\Projects\\Eksi')
 from init import *
@@ -20,10 +19,10 @@ class Eksi:
         sleep(5)
 
         username = self.browser.find_element(By.ID, 'username')
-        username.send_keys(YOUR EKSISOZLUK E-MAIL ADDRESS)
+        username.send_keys('YOUR EKSISOZLUK E-MAIL ADDRESS')
 
         password = self.browser.find_element(By.ID, 'password')
-        password.send_keys(YOUR EKSISOZLUK PASSWORD)
+        password.send_keys('YOUR EKSISOZLUK PASSWORD')
         sleep(15)
 
         actions.send_keys(Keys.RETURN).perform()
@@ -108,7 +107,7 @@ class Eksi:
         if("efendimiz" in self.browser.page_source):
             print('Your post was sent successfully.')
         else:
-            print('Failed to send your post.')
+            print('This entry already exists.')
 
     def fav(self):
         self.browser.get('https://eksisozluk.com/')
@@ -127,8 +126,8 @@ class Eksi:
 eks = Eksi()
 j = 0
 while(True):
-    eks.setup()
     i = 0
+    eks.setup()
     try:
         while(True):
             try:
@@ -142,3 +141,4 @@ while(True):
         j = j + 1
     except:
         print('The topic title could not be found. Re-logging in...')
+        eks.close_browser()
