@@ -10,7 +10,6 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.window import WindowTypes
 import undetected_chromedriver as uc
-import sys
 
 class Setup:
     def init(self):
