@@ -6,8 +6,7 @@ from unidecode import unidecode
 class Eksi:
     def setup(self):
         Setup.init(self)
-        sleep(4)
-        self.browser.get('https://eksisozluk.com/giris?returnUrl=https%3A%2F%2Feksisozluk.com%2F')
+        self.browser.get('https://eksisozluk.com/')
         sleep(4)
 
         actions = ActionChains(self.browser)
@@ -18,6 +17,10 @@ class Eksi:
         actions.send_keys(Keys.RETURN).perform()
         sleep(5)
 
+    def login(self):
+        self.browser.get('https://eksisozluk.com/giris')
+        sleep(4)
+
         username = self.browser.find_element(By.ID, 'username')
         username.send_keys('YOUR EKSISOZLUK E-MAIL ADDRESS')
 
@@ -25,6 +28,7 @@ class Eksi:
         password.send_keys('YOUR EKSISOZLUK PASSWORD')
         sleep(15)
 
+        actions = ActionChains(self.browser)
         actions.send_keys(Keys.RETURN).perform()
         sleep(10)
 
@@ -35,6 +39,7 @@ class Eksi:
             print('Logged in.')
         except:
             print('Failed to login.')
+            Eksi.login(self)
         sleep(10)
 
     def surf(self):
@@ -106,8 +111,9 @@ class Eksi:
 
         if("efendimiz" in self.browser.page_source):
             print('Your post was sent successfully.')
+            sleep(180)
         else:
-            print('This entry already exists.')
+            print('An error occurred while sending the post.')
 
     def fav(self):
         self.browser.get('https://eksisozluk.com/')
@@ -124,21 +130,13 @@ class Eksi:
         Setup.close_browser(self)
 
 eks = Eksi()
-j = 0
+
+eks.setup()
+eks.login()
 while(True):
-    i = 0
-    eks.setup()
     try:
-        while(True):
-            try:
-                eks.send_post()
-                eks.surf()
-                eks.fav()
-                sleep(180)
-                i = i + 1
-            except:
-                eks.close_browser()
-        j = j + 1
+        eks.send_post()
+        eks.surf()
+        eks.fav()
     except:
-        print('The topic title could not be found. Re-logging in...')
-        eks.close_browser()
+        print('No content has been found to copy. Retrying...')
