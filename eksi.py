@@ -130,9 +130,9 @@ class Eksi:
         Setup.close_browser(self)
 
 eks = Eksi()
-
 eks.setup()
 eks.login()
+
 while(True):
     try:
         eks.send_post()
