@@ -140,6 +140,3 @@ while(True):
         eks.fav()
     except:
         print('No content has been found to copy. Retrying...')
-        eks.close_browser()
-        eks.setup()
-        eks.login()
