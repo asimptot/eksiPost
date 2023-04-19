@@ -10,6 +10,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.window import WindowTypes
 import undetected_chromedriver as uc
+import sys
 
 class Setup:
     def init(self):
@@ -25,7 +26,7 @@ class Setup:
         prefs = {"credentials_enable_service": False,
                  "profile.password_manager_enabled": False}
         chrome_options.add_experimental_option("prefs", prefs)
-        self.browser = uc.Chrome(options=chrome_options, version_main=110)
+        self.browser = uc.Chrome(options=chrome_options, version_main=112)
 
     def close_browser(self):
         self.browser.quit()
