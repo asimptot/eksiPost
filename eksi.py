@@ -1,5 +1,5 @@
 import sys
-sys.path.append(r'C:\\Projects\\Eksi')
+sys.path.append(r'C:\\Projects\\eksiPost')
 from init import *
 from unidecode import unidecode
 
@@ -22,7 +22,7 @@ class Eksi:
         sleep(4)
 
         username = self.browser.find_element(By.ID, 'username')
-        username.send_keys('YOUR EKSISOZLUK E-MAIL ADDRESS')
+        username.send_keys('YOUR EKSISOZLUK USERNAME')
 
         password = self.browser.find_element(By.ID, 'password')
         password.send_keys('YOUR EKSISOZLUK PASSWORD')
