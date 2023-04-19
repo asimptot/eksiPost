@@ -1,5 +1,5 @@
 import sys
-sys.path.append(r'C:\\Projects\\Eksi')
+sys.path.append(r'C:\\Projects\\eksiPost')
 from init import *
 from unidecode import unidecode
 
