@@ -1,145 +1,32 @@
+from selenium import webdriver
+from webdriver_manager.chrome import ChromeDriverManager
+from time import sleep
+import warnings
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.by import By
+from random import randint, sample, choice
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.window import WindowTypes
+import undetected_chromedriver as uc
 import sys
-sys.path.append(r'C:\\Projects\\eksiPost')
-from init import *
-from unidecode import unidecode
 
-class Eksi:
-    def setup(self):
-        Setup.init(self)
-        self.browser.get('https://eksisozluk.com/')
-        sleep(4)
-
-        actions = ActionChains(self.browser)
-        M = 3
-        for _ in range(M):
-            actions.send_keys(Keys.TAB).perform()
-            sleep(2)
-        actions.send_keys(Keys.RETURN).perform()
-        sleep(5)
-
-    def login(self):
-        self.browser.get('https://eksisozluk.com/giris')
-        sleep(4)
-
-        username = self.browser.find_element(By.ID, 'username')
-        username.send_keys('YOUR EKSISOZLUK USERNAME')
-
-        password = self.browser.find_element(By.ID, 'password')
-        password.send_keys('YOUR EKSISOZLUK PASSWORD')
-        sleep(15)
-
-        actions = ActionChains(self.browser)
-        actions.send_keys(Keys.RETURN).perform()
-        sleep(10)
-
-        try:
-            WebDriverWait(self.browser, 10).until(
-                EC.element_to_be_clickable((By.XPATH, '//*[@id="top-navigation"]/ul/li[6]/a'))
-            )
-            print('Logged in.')
-        except:
-            print('Failed to login.')
-            Eksi.login(self)
-        sleep(10)
-
-    def surf(self):
-        self.browser.get('https://eksisozluk.com/basliklar/bugun')
-        sleep(4)
-
-        self.browser.get('https://eksisozluk.com/basliklar/gundem')
-        sleep(4)
-
-        self.browser.get('https://eksisozluk.com/debe')
-        sleep(4)
-
-        self.browser.get('https://eksisozluk.com/basliklar/sorunsal')
-        sleep(4)
-
-        self.browser.get('https://eksisozluk.com/basliklar/takipentry')
-        sleep(4)
-
-        self.browser.get('https://eksisozluk.com/basliklar/son')
-        sleep(4)
-
-        self.browser.get('https://eksisozluk.com/basliklar/kenar')
-        sleep(4)
-
-        self.browser.get('https://eksisozluk.com/basliklar/caylaklar/bugun')
-        sleep(4)
-
-        self.browser.get('https://eksisozluk.com/basliklar/kanal/spor')
-        sleep(4)
-
-        self.browser.get('https://eksisozluk.com/basliklar/kanal/iliskiler')
-        sleep(4)
-
-        self.browser.get('https://eksisozluk.com/basliklar/kanal/siyaset')
-        sleep(4)
-
-    def send_post(self):
-        self.browser.get('https://eksisozluk.com/')
-        sleep(4)
-
-        main_title = WebDriverWait(self.browser, 10).until(
-            EC.presence_of_element_located((By.XPATH, '//*[@id="title"]/a/span'))
-        )
-        main_title.click()
-        sleep(4)
-
-        get_url = self.browser.current_url
-        sleep(4)
-
-        self.browser.get(str(get_url)+'?p=3')
-        sleep(4)
-
-        copy = self.browser.find_element(By.XPATH, '//*[@id="entry-item"]/div[1]')
-        copy = copy.text
-        copy = unidecode(copy)
-        sleep(4)
-
-        paste = self.browser.find_element(By.XPATH, '//*[@id="editbox"]')
-        paste.send_keys(copy)
-        sleep(4)
-
-        N = 2
-        actions = ActionChains(self.browser)
-        for _ in range(N):
-            actions.send_keys(Keys.TAB).perform()
-        sleep(2)
-        actions.send_keys(Keys.RETURN).perform()
-        sleep(4)
-
-        if("efendimiz" in self.browser.page_source):
-            print('Your post was sent successfully.')
-            sleep(180)
-        else:
-            print('An error occurred while sending the post.')
-
-    def fav(self):
-        self.browser.get('https://eksisozluk.com/')
-        sleep(4)
-
-        main_title = WebDriverWait(self.browser, 10).until(
-            EC.presence_of_element_located((By.XPATH, '//*[@id="entry-item"]/footer/div[1]/span[2]/a[1]'))
-        )
-        main_title.click()
-        sleep(4)
-        print('The post has been added to favorites.')
+class Setup:
+    def init(self):
+        chrome_options = uc.ChromeOptions()
+        chrome_options.add_argument("--headless=new")
+        chrome_options.add_argument("--mute-audio")
+        chrome_options.add_argument("--disable-popup-blocking")
+        chrome_options.add_argument("--disable-notifications")
+        chrome_options.add_argument('--disable-extensions')
+        chrome_options.add_argument('--disable-translate')
+        chrome_options.add_argument('--disable-gpu')
+        chrome_options.add_argument('--no-sandbox')
+        prefs = {"credentials_enable_service": False,
+                 "profile.password_manager_enabled": False}
+        chrome_options.add_experimental_option("prefs", prefs)
+        self.browser = uc.Chrome(options=chrome_options, version_main=112)
 
     def close_browser(self):
-        Setup.close_browser(self)
-
-eks = Eksi()
-eks.setup()
-eks.login()
-
-while(True):
-    try:
-        eks.send_post()
-        eks.surf()
-        eks.fav()
-    except:
-        print('No content has been found to copy. Retrying...')
-        eks.close_browser()
-        eks.setup()
-        eks.login()
+        self.browser.quit()
