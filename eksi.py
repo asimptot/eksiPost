@@ -1,12 +1,16 @@
-import sys
-sys.path.append(r'C:\\Projects\\eksiPost')
 from init import *
 from unidecode import unidecode
 
 class Eksi:
     def setup(self):
         Setup.init(self)
-        self.browser.get('https://eksisozluk.com/')
+        while(True):
+            try:
+                self.browser.get('https://eksisozluk.com/')
+                sleep(30)
+                break
+            except:
+                self.browser.refresh()
         sleep(4)
 
         actions = ActionChains(self.browser)
@@ -26,11 +30,11 @@ class Eksi:
 
         password = self.browser.find_element(By.ID, 'password')
         password.send_keys('YOUR EKSISOZLUK PASSWORD')
-        sleep(15)
+        sleep(5)
 
         actions = ActionChains(self.browser)
         actions.send_keys(Keys.RETURN).perform()
-        sleep(10)
+        sleep(5)
 
         try:
             WebDriverWait(self.browser, 10).until(
@@ -119,7 +123,7 @@ class Eksi:
         self.browser.get('https://eksisozluk.com/')
         sleep(4)
 
-        main_title = WebDriverWait(self.browser, 10).until(
+        main_title = WebDriverWait(self.browser, 100).until(
             EC.presence_of_element_located((By.XPATH, '//*[@id="entry-item"]/footer/div[1]/span[2]/a[1]'))
         )
         main_title.click()
@@ -142,4 +146,7 @@ while(True):
         print('No content has been found to copy. Retrying...')
         eks.close_browser()
         eks.setup()
-        eks.login()
+        try:
+            eks.login()
+        except:
+            sleep(1)
