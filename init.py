@@ -8,12 +8,24 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.window import WindowTypes
 import undetected_chromedriver as uc
+import subprocess, g4f
+from g4f.client import Client
 
 class Setup:
     def init(self):
         options = uc.ChromeOptions()
         options.add_argument('--headless')
-        self.browser = uc.Chrome(options=options)
+        options.add_argument("--window-position=-2400,-2400")
+        my_user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36"
+        options.add_argument(f"--user-agent={my_user_agent}")
+        self.browser = uc.Chrome(options=options, version_main=131)
+        self.actions = ActionChains(self.browser)
+        self.browser.execute_script('''window.open("https://eksisozluk.com/giris","_blank");''')
+        sleep(5)  # wait until page has loaded
+        self.browser.switch_to.window(window_name=self.browser.window_handles[0])
+        self.browser.close()  # close first tab
+        self.browser.switch_to.window(window_name=self.browser.window_handles[0])
+        sleep(2)
 
     def close_browser(self):
         self.browser.quit()
