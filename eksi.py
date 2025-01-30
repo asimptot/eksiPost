@@ -1,6 +1,7 @@
 from init import *
 from unidecode import unidecode
 
+warnings.filterwarnings("ignore")
 client = Client()
 messages = []
 
