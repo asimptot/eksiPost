@@ -8,7 +8,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.window import WindowTypes
 import undetected_chromedriver as uc
-import subprocess, g4f
+import subprocess, g4f, warnings
 from g4f.client import Client
 
 class Setup:
