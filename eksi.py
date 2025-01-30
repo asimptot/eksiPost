@@ -1,13 +1,15 @@
 from init import *
 from unidecode import unidecode
 
+client = Client()
+messages = []
+
 class Eksi:
     def setup(self):
         Setup.init(self)
         while(True):
             try:
-                self.browser.get('https://eksisozluk.com/')
-                sleep(30)
+                sleep(10)
                 break
             except:
                 self.browser.refresh()
@@ -22,19 +24,26 @@ class Eksi:
         sleep(5)
 
     def login(self):
-        self.browser.get('https://eksisozluk.com/giris')
+        actions = ActionChains(self.browser)
+        #self.browser.get('https://eksisozluk.com/giris')
         sleep(4)
 
-        username = self.browser.find_element(By.ID, 'username')
-        username.send_keys('YOUR EKSISOZLUK USERNAME')
+        while True:
+            try:
+                WebDriverWait(self.browser, 10).until(
+                    EC.element_to_be_clickable((By.ID, 'username'))
+                ).send_keys('YOUR EKSISOZLUK USERNAME')
+                break
+            except:
+                pass
 
         password = self.browser.find_element(By.ID, 'password')
         password.send_keys('YOUR EKSISOZLUK PASSWORD')
         sleep(5)
 
-        actions = ActionChains(self.browser)
         actions.send_keys(Keys.RETURN).perform()
         sleep(5)
+        self.browser.save_screenshot('login.png')
 
         try:
             WebDriverWait(self.browser, 10).until(
@@ -43,7 +52,7 @@ class Eksi:
             print('Logged in.')
         except:
             print('Failed to login.')
-            Eksi.login(self)
+            #Eksi.login(self)
         sleep(10)
 
     def surf(self):
@@ -90,19 +99,36 @@ class Eksi:
         main_title.click()
         sleep(4)
 
-        get_url = self.browser.current_url
+        try:
+            last = WebDriverWait(self.browser, 10).until(
+                EC.presence_of_element_located((By.XPATH, '//*[@id="topic"]/div[1]/div[2]/a[1]'))
+            )
+            last.click()
+        except:
+            self.browser.refresh()
+            main_title = WebDriverWait(self.browser, 10).until(
+                EC.presence_of_element_located((By.XPATH, '//*[@id="title"]/a/span'))
+            )
+            main_title.click()
+            sleep(4)
+            last = WebDriverWait(self.browser, 10).until(
+                EC.presence_of_element_located((By.XPATH, '//*[@id="topic"]/div[1]/div[2]/a[1]'))
+            )
+            last.click()
         sleep(4)
+        all_context = self.browser.find_element(By.XPATH, '//*[@id="topic"]').text
 
-        self.browser.get(str(get_url)+'?p=3')
-        sleep(4)
+        prompt = f"Bu metne dayanarak emoji kullanmadan havali bir içerik üret ve lutfen sadece urettigin icerigi paylas: {all_context}"
+        response = client.chat.completions.create(
+            model=g4f.models.gpt_4,
+            messages=[{"role": "user", "content": prompt}],
+        )
 
-        copy = self.browser.find_element(By.XPATH, '//*[@id="entry-item"]/div[1]')
-        copy = copy.text
-        copy = unidecode(copy)
-        sleep(4)
+        generated_text = response.choices[0].message.content
+        generated_text = unidecode(generated_text)
 
         paste = self.browser.find_element(By.XPATH, '//*[@id="editbox"]')
-        paste.send_keys(copy)
+        paste.send_keys(generated_text)
         sleep(4)
 
         N = 2
