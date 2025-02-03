@@ -119,7 +119,7 @@ class Eksi:
         sleep(4)
         all_context = self.browser.find_element(By.XPATH, '//*[@id="topic"]').text
 
-        prompt = f"Bu metne dayanarak emoji kullanmadan havali bir içerik üret ve lutfen sadece urettigin icerigi paylas: {all_context}"
+        prompt = f"Bu metne dayanarak kısa bir yazı üret, gerçek deneyimlerden ilham alınan bir yazı olsun. Emoji kullanmamalısın, imla hataları yapabilirsin ve devrik dil kullanabilirsin. Yazının bir insan elinden çıktığına inandırmalısın. Cinsiyetin erkek, yani kadın tepkileri verme ve kadınsı ifadeler kullanma: {all_context}"
         response = client.chat.completions.create(
             model=g4f.models.gpt_4,
             messages=[{"role": "user", "content": prompt}],
