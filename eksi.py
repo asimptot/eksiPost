@@ -121,7 +121,7 @@ class Eksi:
 
         prompt = f"Bu metne dayanarak kısa bir yazı üret, gerçek deneyimlerden ilham alınan bir yazı olsun. Emoji kullanmamalısın, imla hataları yapabilirsin ve devrik dil kullanabilirsin. Yazının bir insan elinden çıktığına inandırmalısın. Cinsiyetin erkek, yani kadın tepkileri verme ve kadınsı ifadeler kullanma: {all_context}"
         response = client.chat.completions.create(
-            model=g4f.models.gpt_4,
+            model=g4f.models.deepseek_chat,
             messages=[{"role": "user", "content": prompt}],
         )
 
