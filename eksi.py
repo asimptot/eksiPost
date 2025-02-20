@@ -1,5 +1,4 @@
 from init import *
-from unidecode import unidecode
 
 warnings.filterwarnings("ignore")
 client = Client()
@@ -10,36 +9,40 @@ class Eksi:
         Setup.init(self)
         while(True):
             try:
-                sleep(10)
+                sleep(4)
                 break
             except:
                 self.browser.refresh()
-        sleep(4)
+        sleep(2)
 
         actions = ActionChains(self.browser)
         M = 3
         for _ in range(M):
             actions.send_keys(Keys.TAB).perform()
-            sleep(2)
         actions.send_keys(Keys.RETURN).perform()
-        sleep(5)
+        sleep(2)
 
     def login(self):
         actions = ActionChains(self.browser)
-        #self.browser.get('https://eksisozluk.com/giris')
         sleep(4)
 
         while True:
             try:
+                M = 3
+                for _ in range(M):
+                    actions.send_keys(Keys.TAB).perform()
+                actions.send_keys(Keys.SPACE).perform()
+                sleep(2)
+
                 WebDriverWait(self.browser, 10).until(
                     EC.element_to_be_clickable((By.ID, 'username'))
-                ).send_keys('YOUR EKSISOZLUK USERNAME')
+                ).send_keys('YOUR USERNAME')
                 break
             except:
                 pass
 
         password = self.browser.find_element(By.ID, 'password')
-        password.send_keys('YOUR EKSISOZLUK PASSWORD')
+        password.send_keys('YOUR PASSWORD')
         sleep(5)
 
         actions.send_keys(Keys.RETURN).perform()
@@ -53,7 +56,20 @@ class Eksi:
             print('Logged in.')
         except:
             print('Failed to login.')
+            password = self.browser.find_element(By.ID, 'password')
+            password.send_keys('Haschmeth*1')
+            sleep(5)
+            for _ in range(2):
+                actions.send_keys(Keys.TAB).perform()
+            actions.send_keys(Keys.SPACE).perform()
+            sleep(10)
+            for _ in range(5):
+                actions.send_keys(Keys.TAB).perform()
+            sleep(1)
+            actions.send_keys(Keys.RETURN).perform()
+            sleep(10)
             #Eksi.login(self)
+            self.browser.save_screenshot('hata.png')
         sleep(10)
 
     def surf(self):
@@ -117,16 +133,29 @@ class Eksi:
             )
             last.click()
         sleep(4)
-        all_context = self.browser.find_element(By.XPATH, '//*[@id="topic"]').text
+        try:
+            #title = self.browser.find_element(By.XPATH, '//*[@id="title"]').text
+            posts = self.browser.find_element(By.XPATH, '//*[@id="entry-item-list"]').text
+        except:
+            print('burada sorun var.')
 
-        prompt = f"Bu metne dayanarak kısa bir yazı üret, gerçek deneyimlerden ilham alınan bir yazı olsun. Emoji kullanmamalısın, imla hataları yapabilirsin ve devrik dil kullanabilirsin. Yazının bir insan elinden çıktığına inandırmalısın. Cinsiyetin erkek, yani kadın tepkileri verme ve kadınsı ifadeler kullanma: {all_context}"
+        set_cookies(".google.com", {
+            "__Secure-1PSID": "g.a000tQh7b-GAI3EITmLI48xlpHeCniEPrQiuyIDFUwOBvUgPmzFD3pBwILVZ7GOkQRvhgrqRmgACgYKATwSAQASFQHGX2MiqiwVSp7DMbLLkGCXRaiTzBoVAUF8yKoEZ8LYVHn5uIY4NPB8VO_50076"})
+
+        prompt = (f"{posts} ile ilgili EksiSozluk'te kisa bir yazi uret. "
+                  f"Gercek deneyimlerden ilham alinan bir yazi olsun. ** seklinde alt baslik kullanma. Emoji "
+                  f"kullanmamalisin, imla hatalari yapabilirsin ve devrik dil kullanabilirsin. Yazinin bir insan elinden "
+                  f"ciktigina inandirmalisin. Futbolla ilgili paylasim yapma. Robot gibi konusma. Kisa yazilar yaz. "
+                  f"Lutfen samimi sekilde gonderilerini paylas. Cinsiyetin erkek, yani kadin tepkileri verme ve kadinsi "
+                  f"ifadeler kullanma. Asiri lakayt ve ciddiyetsiz biri gibi ol. Sadece gonderiyi uret, kendi yorumunu ekleme. "
+                  f"** karakerleri arasina kelimeler getirip baslik ureme. Sadece gonderi olsun. ")
         response = client.chat.completions.create(
-            model=g4f.models.deepseek_chat,
+            model=g4f.models.gemini_1_5_flash,
             messages=[{"role": "user", "content": prompt}],
         )
 
         generated_text = response.choices[0].message.content
-        generated_text = unidecode(generated_text)
+        generated_text = generated_text.encode('utf-8').decode('utf-8')
 
         paste = self.browser.find_element(By.XPATH, '//*[@id="editbox"]')
         paste.send_keys(generated_text)
