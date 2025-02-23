@@ -57,7 +57,7 @@ class Eksi:
         except:
             print('Failed to login.')
             password = self.browser.find_element(By.ID, 'password')
-            password.send_keys('Haschmeth*1')
+            password.send_keys('YOUR PASSWORD')
             sleep(5)
             for _ in range(2):
                 actions.send_keys(Keys.TAB).perform()
