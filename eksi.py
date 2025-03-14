@@ -36,13 +36,13 @@ class Eksi:
 
                 WebDriverWait(self.browser, 10).until(
                     EC.element_to_be_clickable((By.ID, 'username'))
-                ).send_keys('YOUR USERNAME')
+                ).send_keys('YOUR EKSISOZLUK USERNAME')
                 break
             except:
                 pass
 
         password = self.browser.find_element(By.ID, 'password')
-        password.send_keys('YOUR PASSWORD')
+        password.send_keys('YOUR EKSISOZLUK PASSWORD')
         sleep(5)
 
         actions.send_keys(Keys.RETURN).perform()
@@ -57,7 +57,7 @@ class Eksi:
         except:
             print('Failed to login.')
             password = self.browser.find_element(By.ID, 'password')
-            password.send_keys('YOUR PASSWORD')
+            password.send_keys('YOUR EKSISOZLUK PASSWORD')
             sleep(5)
             for _ in range(2):
                 actions.send_keys(Keys.TAB).perform()
@@ -140,10 +140,9 @@ class Eksi:
             print('burada sorun var.')
 
         set_cookies(".google.com", {
-            "__Secure-1PSID": "g.a000tQh7b-GAI3EITmLI48xlpHeCniEPrQiuyIDFUwOBvUgPmzFD3pBwILVZ7GOkQRvhgrqRmgACgYKATwSAQASFQHGX2MiqiwVSp7DMbLLkGCXRaiTzBoVAUF8yKoEZ8LYVHn5uIY4NPB8VO_50076"})
+            "__Secure-1PSID": "TOKEN"})
 
-        prompt = (f"{posts} ile ilgili EksiSozluk'te kisa bir yazi uret. "
-                  f"Gercek deneyimlerden ilham alinan bir yazi olsun. ** seklinde alt baslik kullanma. Emoji "
+        prompt = (f"{posts} ile ilgili gercek deneyimlerden ilham alinan, alt basliklari olmayan(** icermeyen) bir kisa bir yazi uret. Emoji "
                   f"kullanmamalisin, imla hatalari yapabilirsin ve devrik dil kullanabilirsin. Yazinin bir insan elinden "
                   f"ciktigina inandirmalisin. Futbolla ilgili paylasim yapma. Robot gibi konusma. Kisa yazilar yaz. "
                   f"Lutfen samimi sekilde gonderilerini paylas. Cinsiyetin erkek, yani kadin tepkileri verme ve kadinsi "
