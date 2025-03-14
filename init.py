@@ -20,12 +20,12 @@ class Setup:
         options = uc.ChromeOptions()
         options.add_argument('--headless')
         options.add_argument("--window-position=-2400,-2400")
-        my_user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36"
+        my_user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
         options.add_argument(f"--user-agent={my_user_agent}")
         self.browser = uc.Chrome(options=options, version_main=133)
         self.actions = ActionChains(self.browser)
         self.browser.execute_script('''window.open("https://eksisozluk.com/giris","_blank");''')
-        sleep(10) 
+        sleep(10)
         self.browser.switch_to.window(window_name=self.browser.window_handles[0])
         self.browser.close()
         self.browser.switch_to.window(window_name=self.browser.window_handles[0])
