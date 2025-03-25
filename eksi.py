@@ -1,3 +1,5 @@
+import g4f.models
+
 from init import *
 
 warnings.filterwarnings("ignore")
@@ -134,22 +136,23 @@ class Eksi:
             last.click()
         sleep(4)
         try:
-            #title = self.browser.find_element(By.XPATH, '//*[@id="title"]').text
-            posts = self.browser.find_element(By.XPATH, '//*[@id="entry-item-list"]').text
+            title = self.browser.find_element(By.XPATH, '//*[@id="title"]').text
+            #posts = self.browser.find_element(By.XPATH, '//*[@id="entry-item-list"]').text
         except:
             print('burada sorun var.')
 
         set_cookies(".google.com", {
-            "__Secure-1PSID": "TOKEN"})
+            "__Secure-1PSID": "g.a000tQh7b-GAI3EITmLI48xlpHeCniEPrQiuyIDFUwOBvUgPmzFD3pBwILVZ7GOkQRvhgrqRmgACgYKATwSAQASFQHGX2MiqiwVSp7DMbLLkGCXRaiTzBoVAUF8yKoEZ8LYVHn5uIY4NPB8VO_50076"})
 
-        prompt = (f"{posts} ile ilgili gercek deneyimlerden ilham alinan, alt basliklari olmayan(** icermeyen) bir kisa bir yazi uret. Emoji "
+        prompt = (f"{title} ile ilgili gercek deneyimlerden ilham alinan, alt basliklari olmayan(** icermeyen) bir kisa bir yazi uret. Emoji "
                   f"kullanmamalisin, imla hatalari yapabilirsin ve devrik dil kullanabilirsin. Yazinin bir insan elinden "
                   f"ciktigina inandirmalisin. Futbolla ilgili paylasim yapma. Robot gibi konusma. Kisa yazilar yaz. "
                   f"Lutfen samimi sekilde gonderilerini paylas. Cinsiyetin erkek, yani kadin tepkileri verme ve kadinsi "
                   f"ifadeler kullanma. Asiri lakayt ve ciddiyetsiz biri gibi ol. Sadece gonderiyi uret, kendi yorumunu ekleme. "
                   f"** karakerleri arasina kelimeler getirip baslik ureme. Sadece gonderi olsun. ")
         response = client.chat.completions.create(
-            model=g4f.models.gemini_1_5_flash,
+            model=g4f.models.gpt_4o,
+            web_search = True,
             messages=[{"role": "user", "content": prompt}],
         )
 
