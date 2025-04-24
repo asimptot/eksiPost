@@ -1,9 +1,30 @@
 import g4f.models
-
+from g4f.Provider import RetryProvider
 from init import *
 
-warnings.filterwarnings("ignore")
-client = Client()
+provider_names = [
+    "Chatgpt4o",
+    "ChatgptFree",
+    "Free2GPT",
+    "GizAI",
+    "Pizzagpt",
+    "Qwen_QVQ_72B",
+    "Qwen_Qwen_2_5",
+    "Qwen_Qwen_2_5M",
+    "Qwen_Qwen_2_5_Max",
+    "Qwen_Qwen_2_72B"
+]
+
+providers = []
+for name in provider_names:
+    try:
+        ProviderClass = getattr(g4f.Provider, name)
+        providers.append(ProviderClass)
+    except AttributeError:
+        print(f"⚠️ Provider not found: {name}")
+
+client = Client(provider=RetryProvider(providers, shuffle=False))
+
 messages = []
 
 class Eksi:
