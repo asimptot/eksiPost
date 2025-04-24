@@ -1,9 +1,3 @@
-from selenium import webdriver
-from time import sleep
-import warnings, ctypes
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.action_chains import ActionChains
-from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.window import WindowTypes
@@ -11,6 +5,10 @@ import undetected_chromedriver as uc
 import subprocess, g4f, warnings
 from g4f.client import Client
 from g4f.cookies import set_cookies
+import g4f.models
+from g4f.Provider import RetryProvider
+
+warnings.filterwarnings("ignore")
 
 class Setup:
     def init(self):
