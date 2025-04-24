@@ -1,6 +1,5 @@
-import g4f.models
-from g4f.Provider import RetryProvider
 from init import *
+
 
 provider_names = [
     "Chatgpt4o",
@@ -21,7 +20,7 @@ for name in provider_names:
         ProviderClass = getattr(g4f.Provider, name)
         providers.append(ProviderClass)
     except AttributeError:
-        print(f"⚠️ Provider not found: {name}")
+        print(f"Provider not found: {name}")
 
 client = Client(provider=RetryProvider(providers, shuffle=False))
 
