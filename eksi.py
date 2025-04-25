@@ -22,7 +22,7 @@ for name in provider_names:
     except AttributeError:
         print(f"Provider not found: {name}")
 
-client = Client(provider=RetryProvider(providers, shuffle=False))
+client = Client(provider=RetryProvider(providers, shuffle=True))
 
 messages = []
 
