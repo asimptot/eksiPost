@@ -161,7 +161,9 @@ class Eksi:
             "__Secure-1PSID": GOOGLE_SECURE_1PSID})
 
         prompt = (f"{title} basligina Eksi Sozluk'e entry gireceksin. Tamamen gercek bir insan gibi yaz. "
-                  f"KESINLIKLE ASLA * (yildiz) karakteri kullanma! ** bile kullanma, hicbir sekilde yildiz olmasin! "
+                  f"ONEMLI: Kelimeleri vurgulamak icin ASLA ASLA yildiz (*) veya cift yildiz (**) kullanma! "
+                  f"Sadece normal duz metin kullan. Hicbir kelimeyi * isaretleri arasina alma! "
+                  f"Markdown formatlamasi yapma, bold yapma, italic yapma! "
                   f"Alt baslik yapma, madde islemi yapma! Sadece duz paragraf yaz. "
                   f"Harfleri NORMAL bitisik yaz, 's a m p i y o n' gibi aralikli yazma! "
                   f"Eksi Sozluk'teki gibi gundelik, dogal, samimi yaz. Imla hatasi yapabilirsin. "
