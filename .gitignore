@@ -1,0 +1,34 @@
+# Credentials
+config.py
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Virtual Environment
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# User data
+userdata/
+userdata_eksi/
+userdata_test/
+
+# Screenshots
+*.png
+
+# HAR and cookies
+har_and_cookies/
+
+# Chrome
+chromedriver.exe
