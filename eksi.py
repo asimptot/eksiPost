@@ -167,8 +167,9 @@ class Eksi:
                   f"Alt baslik yapma, madde islemi yapma! Sadece duz paragraf yaz. "
                   f"Harfleri NORMAL bitisik yaz, 's a m p i y o n' gibi aralikli yazma! "
                   f"Eksi Sozluk'teki gibi gundelik, dogal, samimi yaz. Imla hatasi yapabilirsin. "
-                  f"'umit ederim begenirsin', 'yardimci olabilir miyim', 'hazirladim' gibi yapay zeka cikisi cumleler YAZMA! "
+                  f"'umit ederim begenirsin', 'yardimci olabilir miyim', 'hazirladim', 'iste sana ozel', 'hazirladigim entry' gibi yapay zeka cikisi cumleler YAZMA! "
                   f"Bunlar yapay zeka ifadeleri, insan boyle yazmaz. "
+                  f"HICBIR giris cumlelesi kullanma! Hicbir aciklama yapma! Direkt basla entry'e! "
                   f"Emoji kullanma. Erkek bir kullanici gibi yaz. Cok ciddi olma, rahat yaz. "
                   f"Futbol konularindan uzak dur. Kisa ve oz yaz, 3-5 cumle yeter. "
                   f"Sadece entry'i yaz, baska hicbir sey yazma!")
