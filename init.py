@@ -1,6 +1,6 @@
 from selenium import webdriver
 from time import sleep
-import warnings, ctypes
+import warnings, ctypes, asyncio, logging
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.by import By
@@ -14,7 +14,10 @@ from g4f.cookies import set_cookies
 import g4f.models
 from g4f.Provider import RetryProvider
 
+# Suppress warnings and async errors
 warnings.filterwarnings("ignore")
+logging.getLogger('asyncio').setLevel(logging.CRITICAL)
+logging.getLogger('websockets').setLevel(logging.CRITICAL)
 
 class Setup:
     def init(self):

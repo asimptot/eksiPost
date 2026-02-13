@@ -1,7 +1,20 @@
 import g4f.models
+import sys
+import asyncio
 
 from init import *
 from config import EMAIL, PASSWORD, GOOGLE_SECURE_1PSID
+
+# Suppress asyncio task exception warnings
+def suppress_exception_handler(loop, context):
+    if 'exception' in context:
+        exception = context['exception']
+        if isinstance(exception, ConnectionRefusedError):
+            return  # Suppress ConnectionRefusedError from nodriver
+    # Let other exceptions pass through
+    loop.default_exception_handler(context)
+
+asyncio.get_event_loop().set_exception_handler(suppress_exception_handler)
 
 provider_names = [
     "WeWordle",
@@ -223,11 +236,20 @@ while(True):
         eks.send_post()
         eks.surf()
         eks.fav()
-    except:
-        print('No content has been found to copy. Retrying...')
+    except KeyboardInterrupt:
+        print('\nProgram stopped by user.')
         eks.close_browser()
+        break
+    except Exception as e:
+        print(f'Error occurred: {type(e).__name__}. Retrying...')
+        try:
+            eks.close_browser()
+        except:
+            pass
+        sleep(2)
         eks.setup()
         try:
             eks.login()
-        except:
+        except Exception as login_error:
+            print(f'Login error: {type(login_error).__name__}')
             sleep(1)
