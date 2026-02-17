@@ -16,13 +16,11 @@ def suppress_exception_handler(loop, context):
 
 asyncio.get_event_loop().set_exception_handler(suppress_exception_handler)
 
-# API-based providers that don't require browser/GUI
 provider_names = [
-    "DDG",           # DuckDuckGo - API based, no browser needed
-    "Free2GPT",      # API based
-    "Pizzagpt",      # API based
-    "Editee",        # API based
-    "Yqcloud",       # API based
+    "WeWordle",
+    "Yqcloud",
+    "OperaAria",
+    "AnyProvider",
 ]
 
 providers = []
@@ -33,8 +31,11 @@ for name in provider_names:
     except AttributeError:
         print(f"Provider not found: {name}")
 
-# Create client without browser requirement
-client = Client(provider=RetryProvider(providers, shuffle=True))
+# Create client with headless browser configuration
+client = Client(
+    provider=RetryProvider(providers, shuffle=True),
+    headless=True  # Force headless mode for browser-based providers
+)
 
 messages = []
 
