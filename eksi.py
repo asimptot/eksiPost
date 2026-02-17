@@ -1,9 +1,14 @@
 import g4f.models
 import sys
 import asyncio
+import os
 
 from init import *
 from config import EMAIL, PASSWORD, GOOGLE_SECURE_1PSID
+
+# Force headless mode for g4f providers via environment variable
+os.environ['WEBDRIVER_HEADLESS'] = '1'
+os.environ['G4F_HEADLESS'] = 'true'
 
 # Suppress asyncio task exception warnings
 def suppress_exception_handler(loop, context):
@@ -17,9 +22,9 @@ def suppress_exception_handler(loop, context):
 asyncio.get_event_loop().set_exception_handler(suppress_exception_handler)
 
 provider_names = [
-    "WeWordle",
     "Yqcloud",
     "OperaAria",
+    "Mintlify",
     "AnyProvider",
 ]
 
@@ -31,11 +36,7 @@ for name in provider_names:
     except AttributeError:
         print(f"Provider not found: {name}")
 
-# Create client with headless browser configuration
-client = Client(
-    provider=RetryProvider(providers, shuffle=True),
-    headless=True  # Force headless mode for browser-based providers
-)
+client = Client(provider=RetryProvider(providers, shuffle=True))
 
 messages = []
 
