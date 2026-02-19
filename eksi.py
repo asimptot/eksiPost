@@ -24,7 +24,6 @@ asyncio.get_event_loop().set_exception_handler(suppress_exception_handler)
 provider_names = [
     "Yqcloud",
     "OperaAria",
-    "Mintlify",
     "AnyProvider",
 ]
 
@@ -192,7 +191,7 @@ class Eksi:
                   f"Futbol konularindan uzak dur. Kisa ve oz yaz, 3-5 cumle yeter. "
                   f"Sadece entry'i yaz, baska hicbir sey yazma!")
         response = client.chat.completions.create(
-            model=g4f.models.gpt_4_5,
+            model=g4f.models.grok_3_r1,
             web_search = False,
             messages=[{"role": "user", "content": prompt}],
         )
