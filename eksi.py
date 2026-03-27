@@ -202,6 +202,17 @@ class Eksi:
 
         generated_text = response.choices[0].message.content
         generated_text = generated_text.encode('utf-8').decode('utf-8')
+        # Remove all asterisks (bold/italic markdown formatting)
+        generated_text = generated_text.replace('*', '')
+        # Remove lines that look like meta commentary (e.g. "...başlığına entry:", "işte sana...")
+        lines = generated_text.strip().split('\n')
+        cleaned_lines = []
+        for line in lines:
+            lower = line.strip().lower()
+            if any(phrase in lower for phrase in ['entry:', 'başlığına', 'basligina', 'işte sana', 'iste sana', 'hazırladım', 'hazirladim', '---']):
+                continue
+            cleaned_lines.append(line)
+        generated_text = '\n'.join(cleaned_lines).strip()
 
         paste = self.browser.find_element(By.XPATH, '//*[@id="editbox"]')
         paste.send_keys(generated_text)
