@@ -22,9 +22,12 @@ def suppress_exception_handler(loop, context):
 asyncio.get_event_loop().set_exception_handler(suppress_exception_handler)
 
 provider_names = [
-    "Yqcloud",
+    "CohereForAI_C4AI_Command",
+    "GeminiPro",
+    "Groq",
+    "Qwen_Qwen_3",
     "OperaAria",
-    "AnyProvider",
+    "Yqcloud",
 ]
 
 providers = []
@@ -177,19 +180,19 @@ class Eksi:
         set_cookies(".google.com", {
             "__Secure-1PSID": GOOGLE_SECURE_1PSID})
 
-        prompt = (f"{title} basligina Eksi Sozluk'e entry gireceksin. Tamamen gercek bir insan gibi yaz. "
-                  f"ONEMLI: Kelimeleri vurgulamak icin ASLA ASLA yildiz (*) veya cift yildiz (**) kullanma! "
-                  f"Sadece normal duz metin kullan. Hicbir kelimeyi * isaretleri arasina alma! "
-                  f"Markdown formatlamasi yapma, bold yapma, italic yapma! "
+        prompt = (f"Konu: {title}\n\n"
+                  f"Yukaridaki konu hakkinda Eksi Sozluk'e entry yaz. "
+                  f"BASLIK METNINI TEKRARLAMA! Basligi alintilama, '... basligina entry' gibi seyler yazma! "
+                  f"Direkt konuyla ilgili dusunceni yaz, giris cumlesi olmadan basla. "
+                  f"ONEMLI: Kelimeleri vurgulamak icin ASLA yildiz (*) veya cift yildiz (**) kullanma! "
+                  f"Sadece normal duz metin kullan. Markdown formatlamasi yapma! "
                   f"Alt baslik yapma, madde islemi yapma! Sadece duz paragraf yaz. "
                   f"Harfleri NORMAL bitisik yaz, 's a m p i y o n' gibi aralikli yazma! "
                   f"Eksi Sozluk'teki gibi gundelik, dogal, samimi yaz. Imla hatasi yapabilirsin. "
-                  f"'umit ederim begenirsin', 'yardimci olabilir miyim', 'hazirladim', 'iste sana ozel', 'hazirladigim entry' gibi yapay zeka cikisi cumleler YAZMA! "
-                  f"Bunlar yapay zeka ifadeleri, insan boyle yazmaz. "
-                  f"HICBIR giris cumlelesi kullanma! Hicbir aciklama yapma! Direkt basla entry'e! "
+                  f"'umit ederim begenirsin', 'yardimci olabilir miyim', 'hazirladim', 'iste sana ozel', 'hazirladigim entry', 'bir entry' gibi yapay zeka cikisi cumleler YAZMA! "
                   f"Emoji kullanma. Erkek bir kullanici gibi yaz. Cok ciddi olma, rahat yaz. "
                   f"Futbol konularindan uzak dur. Kisa ve oz yaz, 3-5 cumle yeter. "
-                  f"Sadece entry'i yaz, baska hicbir sey yazma!")
+                  f"Sadece entry metnini yaz, baska hicbir sey yazma!")
         response = client.chat.completions.create(
             model=g4f.models.grok_3_r1,
             web_search = False,
