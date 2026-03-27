@@ -181,18 +181,19 @@ class Eksi:
             "__Secure-1PSID": GOOGLE_SECURE_1PSID})
 
         prompt = (f"Konu: {title}\n\n"
-                  f"Yukaridaki konu hakkinda Eksi Sozluk'e entry yaz. "
-                  f"BASLIK METNINI TEKRARLAMA! Basligi alintilama, '... basligina entry' gibi seyler yazma! "
-                  f"Direkt konuyla ilgili dusunceni yaz, giris cumlesi olmadan basla. "
-                  f"ONEMLI: Kelimeleri vurgulamak icin ASLA yildiz (*) veya cift yildiz (**) kullanma! "
-                  f"Sadece normal duz metin kullan. Markdown formatlamasi yapma! "
-                  f"Alt baslik yapma, madde islemi yapma! Sadece duz paragraf yaz. "
-                  f"Harfleri NORMAL bitisik yaz, 's a m p i y o n' gibi aralikli yazma! "
-                  f"Eksi Sozluk'teki gibi gundelik, dogal, samimi yaz. Imla hatasi yapabilirsin. "
-                  f"'umit ederim begenirsin', 'yardimci olabilir miyim', 'hazirladim', 'iste sana ozel', 'hazirladigim entry', 'bir entry' gibi yapay zeka cikisi cumleler YAZMA! "
-                  f"Emoji kullanma. Erkek bir kullanici gibi yaz. Cok ciddi olma, rahat yaz. "
-                  f"Futbol konularindan uzak dur. Kisa ve oz yaz, 3-5 cumle yeter. "
-                  f"Sadece entry metnini yaz, baska hicbir sey yazma!")
+                  f"Bu konu hakkinda Eksi Sozluk'e kisa bir entry yaz. "
+                  f"Onemli kurallar:\n"
+                  f"- BASLIK METNINI TEKRARLAMA, basligi alintilama.\n"
+                  f"- Ansiklopedi maddesi gibi yazma! Genel bilgi verme, tanim yapma!\n"
+                  f"- Kendi basından gecmis gibi ya da kendi gorusun gibi yaz. Kisisel bir anekdot veya samimi bir yorum olsun.\n"
+                  f"- 'insanlar', 'bircok kisi', 'sektorunde' gibi genel ifadeler kullanma. 'ben', 'benim', 'bizim' gibi kisisel ifadeler kullan.\n"
+                  f"- Yildiz (*), cift yildiz (**), markdown, emoji KULLANMA.\n"
+                  f"- Alt baslik, madde isareti yapma. Duz paragraf yaz.\n"
+                  f"- Gundelik, laubali, samimi yaz. Devrik cumleler kur. Imla hatasi yapabilirsin.\n"
+                  f"- Yapay zeka gibi konusma. 'hazirladim', 'iste sana', 'umarim begenirsin' gibi seyler YAZMA.\n"
+                  f"- Erkek bir kullanici gibi yaz. Rahat ol, ciddiyetsiz ol.\n"
+                  f"- 2-4 cumle yeter, uzun yazma.\n"
+                  f"- Sadece entry metnini yaz, baska hicbir sey ekleme.")
         response = client.chat.completions.create(
             model=g4f.models.grok_3_r1,
             web_search = False,
